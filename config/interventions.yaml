@@ -1,0 +1,150 @@
+# Hand-authored recommendation templates (build plan 4.6).
+# Fields:
+#   id, domain, title
+#   tags:              descriptive tags (preference matching, synergy lookups)
+#   intensity:         1 (very light) .. 5 (very hard)
+#   minutes:           minutes per day the user needs to spend
+#   effort:            effort cost in [0, 1] (term C)
+#   targets:           metric keys from metrics.yaml this item aims to improve
+#   goals:             user goals it serves
+#   contraindications: tags SafetyFilter checks (see safety_rules.yaml)
+# Domains: nutrition, fitness, sleep, lifestyle, preventive_care, wellness.
+# Wording is wellness guidance, never diagnosis or prescription.
+
+interventions:
+  # ---------------- nutrition ----------------
+  - {id: N01, domain: nutrition, title: "Swap salty snacks for fresh fruit or plain vegetables", tags: [low_sodium, snack_swap], intensity: 1, minutes: 5, effort: 0.15, targets: [systolic_bp, diastolic_bp], goals: [lower_bp], contraindications: []}
+  - {id: N02, domain: nutrition, title: "Build dinner on a DASH-style plate: half vegetables, a quarter whole grains, a quarter lean protein", tags: [dash, low_sodium, vegetables, heart_healthy], intensity: 1, minutes: 20, effort: 0.35, targets: [systolic_bp, diastolic_bp, ldl, bmi], goals: [lower_bp, weight_loss], contraindications: []}
+  - {id: N03, domain: nutrition, title: "Add one serving of leafy greens such as kale or spinach each day", tags: [vegetables, fiber, high_vitamin_k], intensity: 1, minutes: 10, effort: 0.2, targets: [ldl, bmi], goals: [weight_loss, lower_bp], contraindications: [high_vitamin_k]}
+  - {id: N04, domain: nutrition, title: "Replace sugary drinks with water or unsweetened tea", tags: [low_sugar, hydration], intensity: 1, minutes: 2, effort: 0.2, targets: [glucose, hba1c, bmi], goals: [glucose_control, weight_loss], contraindications: []}
+  - {id: N05, domain: nutrition, title: "Aim for a modest calorie deficit of about 300 kcal a day", tags: [calorie_deficit, portion_control], intensity: 2, minutes: 10, effort: 0.55, targets: [bmi, body_weight], goals: [weight_loss], contraindications: []}
+  - {id: N06, domain: nutrition, title: "Choose whole-grain bread and pasta instead of refined versions", tags: [whole_grain, fiber, low_gi], intensity: 1, minutes: 5, effort: 0.2, targets: [glucose, hba1c, ldl], goals: [glucose_control], contraindications: ["allergen:wheat"]}
+  - {id: N07, domain: nutrition, title: "Eat oily fish such as salmon or sardines twice a week", tags: [omega3, fish, heart_healthy], intensity: 1, minutes: 15, effort: 0.3, targets: [ldl, hdl, total_cholesterol], goals: [lower_bp], contraindications: ["allergen:fish"]}
+  - {id: N08, domain: nutrition, title: "Add soluble fibre at breakfast, such as oats or beans", tags: [fiber, oats, low_gi], intensity: 1, minutes: 10, effort: 0.2, targets: [ldl, total_cholesterol, glucose], goals: [glucose_control, lower_bp], contraindications: []}
+  - {id: N09, domain: nutrition, title: "Make one meal a day plant-based, using lentils, beans or chickpeas", tags: [vegetarian, plant_protein, fiber], intensity: 1, minutes: 20, effort: 0.35, targets: [ldl, bmi], goals: [weight_loss, lower_bp], contraindications: []}
+  - {id: N10, domain: nutrition, title: "Limit processed meats such as bacon, ham and sausages", tags: [low_sodium, heart_healthy], intensity: 1, minutes: 2, effort: 0.3, targets: [systolic_bp, ldl], goals: [lower_bp], contraindications: []}
+  - {id: N11, domain: nutrition, title: "Pair carbohydrates with protein or healthy fat to soften glucose spikes", tags: [low_gi, meal_timing], intensity: 1, minutes: 5, effort: 0.2, targets: [glucose, hba1c], goals: [glucose_control], contraindications: []}
+  - {id: N12, domain: nutrition, title: "Finish dinner at least 3 hours before bedtime", tags: [meal_timing, sleep_support], intensity: 1, minutes: 2, effort: 0.25, targets: [sleep_hours, glucose], goals: [better_sleep, glucose_control], contraindications: []}
+  - {id: N13, domain: nutrition, title: "Start the day with half a grapefruit instead of a pastry", tags: [fruit, grapefruit, snack_swap], intensity: 1, minutes: 5, effort: 0.15, targets: [bmi, glucose], goals: [weight_loss], contraindications: [grapefruit]}
+  - {id: N14, domain: nutrition, title: "Have a small handful of unsalted peanuts as an afternoon snack", tags: [nuts, snack_swap, plant_protein], intensity: 1, minutes: 2, effort: 0.1, targets: [hdl, glucose], goals: [glucose_control], contraindications: ["allergen:peanut"]}
+  - {id: N15, domain: nutrition, title: "Season with herbs, spices and lemon instead of salt", tags: [low_sodium, cooking], intensity: 1, minutes: 5, effort: 0.2, targets: [systolic_bp, diastolic_bp], goals: [lower_bp], contraindications: []}
+  - {id: N16, domain: nutrition, title: "Eat meals slowly, without screens, over at least 20 minutes", tags: [portion_control, mindfulness], intensity: 1, minutes: 20, effort: 0.25, targets: [bmi, body_weight], goals: [weight_loss], contraindications: []}
+
+  # ---------------- fitness ----------------
+  - {id: F01, domain: fitness, title: "Take a brisk 20-minute walk every day", tags: [walking, aerobic, low_impact, outdoor], intensity: 2, minutes: 20, effort: 0.3, targets: [steps, systolic_bp, bmi, glucose], goals: [more_activity, lower_bp, weight_loss], contraindications: []}
+  - {id: F02, domain: fitness, title: "Take a 10-minute walk after dinner", tags: [walking, evening_walk, post_meal, low_impact], intensity: 1, minutes: 10, effort: 0.15, targets: [glucose, steps, sleep_hours], goals: [glucose_control, more_activity, better_sleep], contraindications: []}
+  - {id: F03, domain: fitness, title: "Take a 30-minute brisk walk on most days", tags: [walking, aerobic, low_impact, outdoor], intensity: 2, minutes: 30, effort: 0.4, targets: [steps, systolic_bp, bmi, hdl], goals: [more_activity, lower_bp, weight_loss], contraindications: []}
+  - {id: F04, domain: fitness, title: "Do 25 minutes of jog-walk intervals", tags: [running, aerobic, high_impact, knee_load], intensity: 4, minutes: 25, effort: 0.65, targets: [bmi, systolic_bp, hdl, steps], goals: [weight_loss, more_activity], contraindications: [high_impact, knee_load]}
+  - {id: F05, domain: fitness, title: "Do a 20-minute high-intensity interval session (HIIT)", tags: [hiit, high_intensity, high_impact], intensity: 5, minutes: 20, effort: 0.8, targets: [bmi, glucose, hdl], goals: [weight_loss, glucose_control, more_activity], contraindications: [high_impact]}
+  - {id: F06, domain: fitness, title: "Do 30 minutes of moderate stationary cycling", tags: [cycling, aerobic, low_impact], intensity: 3, minutes: 30, effort: 0.45, targets: [bmi, systolic_bp, glucose], goals: [weight_loss, lower_bp, more_activity], contraindications: []}
+  - {id: F07, domain: fitness, title: "Swim laps for 30 minutes", tags: [swimming, aerobic, low_impact], intensity: 3, minutes: 30, effort: 0.5, targets: [bmi, systolic_bp, hdl], goals: [weight_loss, more_activity, lower_bp], contraindications: []}
+  - {id: F08, domain: fitness, title: "Do a 20-minute bodyweight circuit (squats, lunges, push-ups)", tags: [strength, resistance, knee_load], intensity: 3, minutes: 20, effort: 0.5, targets: [glucose, bmi], goals: [glucose_control, weight_loss], contraindications: [knee_load]}
+  - {id: F09, domain: fitness, title: "Do 15 minutes of resistance-band strength exercises", tags: [strength, resistance, low_impact], intensity: 2, minutes: 15, effort: 0.3, targets: [glucose, bmi], goals: [glucose_control, more_activity], contraindications: []}
+  - {id: F10, domain: fitness, title: "Do a 45-minute heavy weight-training session", tags: [strength, resistance, heavy_lifting, high_intensity, heavy_spinal_load], intensity: 4, minutes: 45, effort: 0.75, targets: [glucose, bmi, body_weight], goals: [glucose_control, weight_loss], contraindications: [heavy_spinal_load]}
+  - {id: F11, domain: fitness, title: "Skip rope for 10 minutes", tags: [hiit, cardio, high_impact, knee_load], intensity: 4, minutes: 10, effort: 0.55, targets: [bmi, steps], goals: [weight_loss, more_activity], contraindications: [high_impact, knee_load]}
+  - {id: F12, domain: fitness, title: "Do 20 minutes of gentle yoga", tags: [yoga, flexibility, low_impact, relaxation], intensity: 1, minutes: 20, effort: 0.25, targets: [sleep_hours, systolic_bp], goals: [better_sleep, lower_bp], contraindications: []}
+  - {id: F13, domain: fitness, title: "Do a 30-minute dance workout", tags: [dance, aerobic], intensity: 3, minutes: 30, effort: 0.45, targets: [bmi, steps, hdl], goals: [weight_loss, more_activity], contraindications: []}
+  - {id: F14, domain: fitness, title: "Take the stairs instead of the lift when you can", tags: [stairs, incidental_activity, knee_load], intensity: 2, minutes: 5, effort: 0.2, targets: [steps, bmi], goals: [more_activity], contraindications: [knee_load]}
+  - {id: F15, domain: fitness, title: "Stand up and move for 2 minutes every hour", tags: [incidental_activity, sedentary_break, low_impact], intensity: 1, minutes: 10, effort: 0.2, targets: [steps, glucose], goals: [more_activity, glucose_control], contraindications: []}
+  - {id: F16, domain: fitness, title: "Do 30 minutes of water aerobics", tags: [swimming, aquatic, aerobic, low_impact], intensity: 2, minutes: 30, effort: 0.4, targets: [bmi, systolic_bp], goals: [weight_loss, more_activity], contraindications: []}
+  - {id: F17, domain: fitness, title: "Practise tai chi for 20 minutes", tags: [tai_chi, balance, low_impact, mindfulness], intensity: 1, minutes: 20, effort: 0.25, targets: [systolic_bp, sleep_hours], goals: [lower_bp, better_sleep], contraindications: []}
+
+  # ---------------- sleep ----------------
+  - {id: S01, domain: sleep, title: "Wake up at the same time every day, including weekends", tags: [sleep_schedule, sleep_hygiene], intensity: 1, minutes: 2, effort: 0.35, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: S02, domain: sleep, title: "Move your bedtime 30 minutes earlier", tags: [earlier_bedtime, sleep_schedule], intensity: 1, minutes: 5, effort: 0.35, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: S03, domain: sleep, title: "Put screens away 60 minutes before bed", tags: [sleep_hygiene, screen_limit], intensity: 1, minutes: 5, effort: 0.4, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: S04, domain: sleep, title: "Avoid caffeine after 2 pm", tags: [sleep_hygiene, caffeine_cutoff], intensity: 1, minutes: 1, effort: 0.3, targets: [sleep_hours, heart_rate], goals: [better_sleep], contraindications: []}
+  - {id: S05, domain: sleep, title: "Follow a 15-minute wind-down routine (reading, light stretching)", tags: [sleep_hygiene, wind_down, relaxation], intensity: 1, minutes: 15, effort: 0.25, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: S06, domain: sleep, title: "Keep the bedroom cool, dark and quiet", tags: [sleep_environment, sleep_hygiene], intensity: 1, minutes: 5, effort: 0.15, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: S07, domain: sleep, title: "Get 10 minutes of daylight within an hour of waking", tags: [daylight, circadian, outdoor], intensity: 1, minutes: 10, effort: 0.15, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: S08, domain: sleep, title: "Keep naps under 20 minutes and before 3 pm", tags: [nap_limit, sleep_schedule], intensity: 1, minutes: 2, effort: 0.2, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: S09, domain: sleep, title: "Avoid alcohol within 3 hours of bedtime", tags: [alcohol_reduction, sleep_hygiene], intensity: 1, minutes: 1, effort: 0.3, targets: [sleep_hours, heart_rate], goals: [better_sleep], contraindications: []}
+  - {id: S10, domain: sleep, title: "Keep a simple sleep diary for two weeks", tags: [tracking, sleep_tracking], intensity: 1, minutes: 5, effort: 0.2, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: S11, domain: sleep, title: "Try 4-7-8 breathing for 5 minutes in bed", tags: [breathing, relaxation], intensity: 1, minutes: 5, effort: 0.1, targets: [sleep_hours, heart_rate], goals: [better_sleep], contraindications: []}
+
+  # ---------------- lifestyle ----------------
+  - {id: L01, domain: lifestyle, title: "Set a quit date and use support resources to stop smoking", tags: [smoking_cessation], intensity: 3, minutes: 10, effort: 0.85, targets: [systolic_bp, hdl], goals: [lower_bp], contraindications: []}
+  - {id: L02, domain: lifestyle, title: "Keep alcohol to at most one drink a day", tags: [alcohol_reduction], intensity: 1, minutes: 1, effort: 0.4, targets: [systolic_bp, bmi], goals: [lower_bp, weight_loss], contraindications: []}
+  - {id: L03, domain: lifestyle, title: "Raise your daily step goal by 1,000 steps", tags: [step_goal, walking, tracking], intensity: 2, minutes: 10, effort: 0.25, targets: [steps, bmi], goals: [more_activity, weight_loss], contraindications: []}
+  - {id: L04, domain: lifestyle, title: "Prepare your own lunch three days a week", tags: [meal_prep, cooking, portion_control, low_sodium], intensity: 1, minutes: 30, effort: 0.45, targets: [systolic_bp, bmi], goals: [lower_bp, weight_loss], contraindications: []}
+  - {id: L05, domain: lifestyle, title: "Swap 30 minutes of TV for an active hobby", tags: [sedentary_break, screen_limit], intensity: 2, minutes: 10, effort: 0.3, targets: [steps, bmi], goals: [more_activity], contraindications: []}
+  - {id: L06, domain: lifestyle, title: "Park farther away or get off the bus one stop early", tags: [walking, incidental_activity, low_impact], intensity: 1, minutes: 10, effort: 0.15, targets: [steps], goals: [more_activity], contraindications: []}
+  - {id: L07, domain: lifestyle, title: "Use a standing desk for one hour a day", tags: [sedentary_break], intensity: 1, minutes: 5, effort: 0.15, targets: [steps, glucose], goals: [more_activity], contraindications: []}
+  - {id: L08, domain: lifestyle, title: "Weigh yourself once a week at the same time", tags: [weight_tracking, tracking], intensity: 1, minutes: 2, effort: 0.1, targets: [body_weight, bmi], goals: [weight_loss], contraindications: []}
+  - {id: L09, domain: lifestyle, title: "Have an afternoon green tea instead of a sweet snack", tags: [caffeine, late_caffeine, snack_swap], intensity: 1, minutes: 5, effort: 0.1, targets: [bmi, glucose], goals: [weight_loss], contraindications: []}
+  - {id: L10, domain: lifestyle, title: "Cycle to work or errands", tags: [cycling, active_commute, aerobic], intensity: 3, minutes: 30, effort: 0.5, targets: [steps, bmi, systolic_bp], goals: [more_activity, weight_loss], contraindications: []}
+  - {id: L11, domain: lifestyle, title: "Log meals in a food diary or app", tags: [food_tracking, tracking], intensity: 1, minutes: 10, effort: 0.35, targets: [bmi, glucose], goals: [weight_loss, glucose_control], contraindications: []}
+  - {id: L12, domain: lifestyle, title: "Take phone calls while walking", tags: [walking, incidental_activity, low_impact], intensity: 1, minutes: 15, effort: 0.15, targets: [steps], goals: [more_activity], contraindications: []}
+
+  # ---------------- preventive_care ----------------
+  - {id: P01, domain: preventive_care, title: "Check your blood pressure at home twice a week and log it", tags: [bp_monitoring, tracking], intensity: 1, minutes: 5, effort: 0.15, targets: [systolic_bp, diastolic_bp], goals: [lower_bp], contraindications: []}
+  - {id: P02, domain: preventive_care, title: "Ask your clinician whether a cholesterol (lipid) test is due", tags: [lab_test, checkup], intensity: 1, minutes: 2, effort: 0.2, targets: [ldl, total_cholesterol, hdl], goals: [lower_bp], contraindications: []}
+  - {id: P03, domain: preventive_care, title: "Ask your clinician whether an HbA1c test is due", tags: [lab_test, checkup], intensity: 1, minutes: 2, effort: 0.2, targets: [hba1c, glucose], goals: [glucose_control], contraindications: []}
+  - {id: P04, domain: preventive_care, title: "Book an annual wellness check-up", tags: [checkup], intensity: 1, minutes: 2, effort: 0.2, targets: [systolic_bp, bmi], goals: [lower_bp, weight_loss], contraindications: []}
+  - {id: P05, domain: preventive_care, title: "Review your medicines with a pharmacist", tags: [medication_review], intensity: 1, minutes: 2, effort: 0.2, targets: [], goals: [], contraindications: []}
+  - {id: P06, domain: preventive_care, title: "Set a daily reminder to take prescribed medicines as directed", tags: [medication_adherence, tracking], intensity: 1, minutes: 1, effort: 0.1, targets: [systolic_bp, ldl, hba1c], goals: [lower_bp, glucose_control], contraindications: []}
+  - {id: P07, domain: preventive_care, title: "Record home glucose checks if your care team advised them", tags: [glucose_monitoring, tracking], intensity: 1, minutes: 5, effort: 0.25, targets: [glucose, hba1c], goals: [glucose_control], contraindications: []}
+  - {id: P08, domain: preventive_care, title: "Check your feet daily for cuts or sores", tags: [foot_care], intensity: 1, minutes: 2, effort: 0.1, targets: [], goals: [glucose_control], contraindications: []}
+  - {id: P09, domain: preventive_care, title: "Book a routine dental check-up", tags: [checkup, dental], intensity: 1, minutes: 2, effort: 0.15, targets: [], goals: [], contraindications: []}
+  - {id: P10, domain: preventive_care, title: "Mention persistent poor sleep to your clinician", tags: [checkup, sleep_tracking], intensity: 1, minutes: 2, effort: 0.2, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: P11, domain: preventive_care, title: "Get your seasonal flu vaccination", tags: [vaccination], intensity: 1, minutes: 2, effort: 0.15, targets: [], goals: [], contraindications: []}
+
+  # ---------------- wellness ----------------
+  - {id: W01, domain: wellness, title: "Practise 10 minutes of mindfulness meditation", tags: [mindfulness, stress_reduction, relaxation], intensity: 1, minutes: 10, effort: 0.2, targets: [systolic_bp, sleep_hours, heart_rate], goals: [lower_bp, better_sleep], contraindications: []}
+  - {id: W02, domain: wellness, title: "Write three things you are grateful for each evening", tags: [journaling, stress_reduction], intensity: 1, minutes: 5, effort: 0.1, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: W03, domain: wellness, title: "Do 5 minutes of box breathing twice a day", tags: [breathing, stress_reduction, relaxation], intensity: 1, minutes: 10, effort: 0.1, targets: [systolic_bp, heart_rate], goals: [lower_bp], contraindications: []}
+  - {id: W04, domain: wellness, title: "Call or meet a friend at least once a week", tags: [social_connection], intensity: 1, minutes: 15, effort: 0.2, targets: [], goals: [], contraindications: []}
+  - {id: W05, domain: wellness, title: "Try 15 minutes of progressive muscle relaxation", tags: [relaxation, stress_reduction, wind_down], intensity: 1, minutes: 15, effort: 0.15, targets: [sleep_hours, systolic_bp], goals: [better_sleep, lower_bp], contraindications: []}
+  - {id: W06, domain: wellness, title: "Spend 20 minutes outdoors in a green space", tags: [outdoor, walking, stress_reduction, daylight, low_impact], intensity: 1, minutes: 20, effort: 0.2, targets: [steps, sleep_hours], goals: [more_activity, better_sleep], contraindications: []}
+  - {id: W07, domain: wellness, title: "Spend 20 minutes on a screen-free hobby", tags: [hobby, screen_limit], intensity: 1, minutes: 20, effort: 0.15, targets: [], goals: [better_sleep], contraindications: []}
+  - {id: W08, domain: wellness, title: "Have one screen-free evening each week", tags: [screen_limit, sleep_hygiene], intensity: 1, minutes: 5, effort: 0.3, targets: [sleep_hours], goals: [better_sleep], contraindications: []}
+  - {id: W09, domain: wellness, title: "Take a 10-minute stretching break", tags: [flexibility, stretching, low_impact, sedentary_break], intensity: 1, minutes: 10, effort: 0.1, targets: [steps], goals: [more_activity], contraindications: []}
+  - {id: W10, domain: wellness, title: "Drink 6 to 8 glasses of water across the day", tags: [hydration], intensity: 1, minutes: 2, effort: 0.1, targets: [bmi], goals: [weight_loss], contraindications: []}
+
+# Recipe candidates (built in Phase 4 from RAW_recipes.csv).
+# Food.com nutrition column: [calories, total_fat_pdv, sugar_pdv, sodium_pdv, protein_pdv, sat_fat_pdv, carbs_pdv]
+recipes:
+  sample_size: 5000
+  min_minutes: 5                   # shorter entries are mostly drinks and garnishes
+  # Food.com meal-type tags: keep actual meals, drop condiments, desserts, drinks, dips, snacks
+  include_meal_tags: [main-dish, breakfast, lunch, side-dishes, salads, soups-stews, brunch, one-dish-meal]
+  exclude_meal_tags: [condiments-etc, sauces, desserts, beverages, cocktails, dips, spreads, candy,
+                      cookies-and-brownies, cakes, salad-dressings, appetizers, snacks]
+  max_minutes: 60
+  # wellness recipes only: no alcohol, no processed meat (one of our own templates says to limit it)
+  exclude_ingredient_keywords: [vodka, gin, rum, tequila, whiskey, whisky, bourbon, brandy, liqueur, schnapps,
+                                cognac, vermouth, champagne, wine, beer, sake, triple sec, kahlua, amaretto,
+                                hot dog, frankfurter, wiener, bacon, sausage, ham, salami, pepperoni, bologna, spam,
+                                chorizo, prosciutto, pastrami, corned beef, kielbasa, bratwurst, pancetta, jerky,
+                                luncheon meat, deli meat, lunch meat]
+  # substrings that are NOT those words: "gin" in ginger / extra virgin, "rum" in breadcrumbs / drumsticks / rump,
+  # "wine" in wine vinegar, "ham" in hamburger / graham / chamomile (applied to all recipe keyword lists above)
+  keyword_exceptions: [ginger, virgin, original, crumb, drumstick, rump, wine vinegar, chamomile, hamburger,
+                       graham, hamachi]
+  domain: nutrition
+  intensity: 1
+  effort_per_minute: 0.01          # effort = min(1, minutes * effort_per_minute)
+  diet_tags:                       # tag: rule on percent-daily-value columns / ingredients
+    low_sodium:   {field: sodium_pdv,  max: 10}
+    low_sugar:    {field: sugar_pdv,   max: 10}
+    high_protein: {field: protein_pdv, min: 30}
+    vegetarian:   {exclude_ingredient_keywords: [beef, pork, chicken, turkey, lamb, bacon, ham, sausage, fish, salmon, tuna, shrimp, crab, anchov, gelatin, veal, duck, prosciutto, pepperoni, chorizo, lobster, clam, mussel, oyster, scallop]}
+  diet_tag_targets:                # metrics a diet tag is assumed to help
+    low_sodium:   [systolic_bp, diastolic_bp]
+    low_sugar:    [glucose, hba1c, bmi]
+    high_protein: [bmi, body_weight]
+    vegetarian:   [ldl, total_cholesterol]
+  diet_tag_goals:
+    low_sodium:   [lower_bp]
+    low_sugar:    [glucose_control, weight_loss]
+    high_protein: [weight_loss]
+    vegetarian:   [lower_bp, weight_loss]
+
+# Preference vocabularies used by synth_lifestyle.py and preference matching (term P)
+preferences:
+  diet_styles:
+    omnivore:      [heart_healthy, plant_protein, fish]
+    vegetarian:    [vegetarian, plant_protein]
+    mediterranean: [heart_healthy, fish, vegetables, whole_grain]
+    low_carb:      [low_sugar, low_gi, high_protein]
+  exercise_types: [walking, cycling, swimming, running, strength, yoga, dance, hiit, tai_chi]

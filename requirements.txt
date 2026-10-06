@@ -1,0 +1,16 @@
+# Target: Python 3.14 (all packages below publish 3.14-compatible wheels)
+pandas>=3.0
+numpy>=2.3
+pyarrow>=21.0
+# Pinned: newer 3.14 builds (sklearn 1.9.x, scipy 1.18.x) are blocked by Windows Smart App Control
+# on this machine because they are too new to have a reputation; these versions load fine.
+scikit-learn==1.8.0
+xgboost>=3.1
+scipy==1.17.0
+pyyaml>=6.0.3
+matplotlib>=3.10
+streamlit>=1.50
+pytest>=8.4
+tqdm>=4.67
+kaggle>=1.7
+joblib>=1.5

@@ -1,0 +1,15 @@
+# Raw datasets are large (~2.4 GB) and come from third parties; see README "Get the data".
+data/raw/*
+!data/raw/.gitkeep
+
+# Generated outputs ARE committed (data/processed, models, reports) so the project can be
+# explored without regenerating anything.
+
+# Logs from local runs
+reports/*.log
+
+# Python / tooling
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/

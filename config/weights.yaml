@@ -1,0 +1,20 @@
+# Default hand-set ranking weights (build plan 5.3).
+# Score = w1*R + w2*G + w3*U + w4*P + w5*F + w6*H - w7*C
+# Learned weights are written separately to config/weights_learned.yaml (Phase 7).
+
+seed: 42
+
+weights:
+  relevance: 0.25     # w1  R
+  goal: 0.20          # w2  G
+  urgency: 0.20       # w3  U
+  preference: 0.10    # w4  P
+  feasibility: 0.10   # w5  F
+  history: 0.10       # w6  H
+  cost: 0.05          # w7  C (subtracted)
+
+# Cross-domain set selection (build plan 5.4)
+set_selection:
+  k: 5
+  alpha: 0.3
+  max_per_domain: 2

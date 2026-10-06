@@ -1,0 +1,15 @@
+note: Learned on SIMULATED users (scripts/05_simulate_feedback.py); reflects the simulator's
+  assumptions, not real-world effectiveness.
+weights:
+  relevance: 0.0428
+  goal: 0.0882
+  urgency: 0.0387
+  preference: 0.0619
+  feasibility: 0.1572
+  history: 0.5665
+  cost: 0.0447
+rounds: 30
+patients: 775
+learn_every: 5
+sim_base_offset: -1.75
+log_rows: 116250

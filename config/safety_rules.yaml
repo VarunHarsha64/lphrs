@@ -1,0 +1,152 @@
+# Hard safety constraints applied by SafetyFilter (build plan 4.7).
+# Simplified illustrations; NOT reviewed by a clinician.
+#
+# Each rule has:
+#   trigger:  which patients it applies to (any_of a list of trigger clauses)
+#     - {type: allergy}                     patient has at least one mapped allergen
+#     - {type: condition,  keywords: [...]} active condition description contains a keyword
+#     - {type: medication, keywords: [...]} active medication description contains a keyword
+#     - {type: injury,     values: [...]}   synthetic survey injury
+#   drop_when: which candidates are removed for those patients
+#     - {allergen_overlap: true}            candidate "allergen:*" tag matches a patient allergen
+#     - {tags_any: [...]}                   candidate tags or contraindications contain any of these
+#     - {nutrient_above: {field, value}}    recipe nutrient (percent daily value) above cap
+#     - {intensity_at_least: n}
+#   applies_to: candidate domains (or "recipe" for recipe candidates, "all" for everything)
+# All keyword matching is case-insensitive substring matching.
+# Keyword lists are checked against the real Synthea export in Phases 2 and 4.
+
+rules:
+  - id: allergy_match
+    description: Contains an ingredient you are allergic to
+    applies_to: [all]
+    trigger: {any_of: [{type: allergy}]}
+    drop_when: {allergen_overlap: true}
+
+  - id: hypertension_sodium_cap
+    description: Too much sodium for someone with high blood pressure
+    applies_to: [recipe]
+    trigger: {any_of: [{type: condition, keywords: [hypertension]}]}
+    drop_when: {nutrient_above: {field: sodium_pdv, value: 25}}     # > 25% DV per serving (~575 mg)
+
+  - id: diabetes_sugar_cap
+    description: Too much sugar for someone with diabetes or prediabetes
+    applies_to: [recipe]
+    trigger: {any_of: [{type: condition, keywords: [diabetes, prediabetes]}]}
+    drop_when: {nutrient_above: {field: sugar_pdv, value: 25}}
+
+  - id: joint_high_impact
+    description: High-impact exercise is not suitable with a knee or back injury or osteoarthritis
+    applies_to: [all]
+    trigger:
+      any_of:
+        - {type: injury, values: [knee, back]}
+        # keywords checked against the Synthea export (hand osteoarthritis deliberately excluded)
+        - type: condition
+          keywords: [osteoarthritis of knee, osteoarthritis of hip, injury of knee, cruciate ligament,
+                     collateral ligament of knee, meniscus of knee, chronic low back pain, vertebral column]
+    drop_when: {tags_any: [high_impact]}
+
+  - id: knee_load
+    description: Puts heavy load on the knee
+    applies_to: [all]
+    trigger:
+      any_of:
+        - {type: injury, values: [knee]}
+        - type: condition
+          keywords: [osteoarthritis of knee, injury of knee, cruciate ligament, collateral ligament of knee, meniscus of knee]
+    drop_when: {tags_any: [knee_load]}
+
+  - id: back_heavy_load
+    description: Puts heavy load on the spine
+    applies_to: [all]
+    trigger:
+      any_of:
+        - {type: injury, values: [back]}
+        - {type: condition, keywords: [chronic low back pain, vertebral column]}
+    drop_when: {tags_any: [heavy_spinal_load]}
+
+  - id: cardiac_intensity_cap
+    description: Intensity too high for someone with a heart condition
+    applies_to: [all]
+    trigger:
+      any_of:
+        - type: condition
+          # "coronary" alone would also match the imaging finding
+          # "Abnormal findings diagnostic imaging heart+coronary circulat"
+          keywords:
+            - coronary artery bypass
+            - coronary heart disease
+            - coronary artery disease
+            - myocardial infarction
+            - heart failure
+            - atrial fibrillation
+            - angina
+            - cardiac arrest
+            - ischemic heart
+    drop_when: {intensity_at_least: 4}
+
+  - id: warfarin_vitamin_k
+    description: High in vitamin K, which interacts with warfarin
+    applies_to: [all]
+    trigger: {any_of: [{type: medication, keywords: [warfarin]}]}
+    drop_when: {tags_any: [high_vitamin_k]}
+
+  - id: statin_grapefruit
+    description: Contains grapefruit, which interacts with some statins
+    applies_to: [all]
+    trigger:
+      any_of:
+        # explicit names: a bare "statin" keyword would also match "nystatin"
+        - type: medication
+          keywords: [simvastatin, atorvastatin, lovastatin, pravastatin, rosuvastatin, fluvastatin, pitavastatin]
+    drop_when: {tags_any: [grapefruit]}
+
+# Allergen vocabulary.
+#   allergy_keywords:    matched against Synthea allergies.csv DESCRIPTION -> patient allergen
+#   ingredient_keywords: matched against recipe ingredients -> "allergen:<name>" tag
+#   exclude_keywords:    strings that contain a keyword but are not the allergen
+#                        (applied to both allergy descriptions and ingredients)
+allergens:
+  peanut:
+    allergy_keywords: [peanut]
+    ingredient_keywords: [peanut]
+    exclude_keywords: []
+  tree_nut:
+    allergy_keywords: [tree nut, almond, walnut, cashew, pecan, hazelnut, pistachio]
+    ingredient_keywords: [almond, walnut, cashew, pecan, pistachio, hazelnut, macadamia, brazil nut, pine nut]
+    exclude_keywords: []
+  milk:
+    allergy_keywords: [milk, dairy]
+    ingredient_keywords: [milk, cheese, butter, cream, yogurt, yoghurt, whey, ghee, buttermilk, parmesan, mozzarella, cheddar, ricotta]
+    exclude_keywords: [peanut butter, almond butter, apple butter, cocoa butter, butternut, coconut milk, coconut cream, almond milk, soy milk, oat milk, rice milk, cream of tartar]
+  egg:
+    allergy_keywords: [egg]
+    ingredient_keywords: [egg, mayonnaise]
+    exclude_keywords: [eggplant]
+  wheat:
+    allergy_keywords: [wheat, gluten]
+    ingredient_keywords: [wheat, flour, bread, pasta, spaghetti, noodle, couscous, semolina, tortilla, cracker, breadcrumb]
+    exclude_keywords: [rice flour, almond flour, coconut flour, corn flour, cornflour, buckwheat, rice noodle, corn tortilla]
+  soy:
+    allergy_keywords: [soy, soya, glycine max]     # Synthea: "Glycine max (substance)"
+    ingredient_keywords: [soy, tofu, edamame, tempeh, miso]
+    exclude_keywords: []
+  fish:
+    allergy_keywords: [fish]
+    # extended after an audit against Food.com's fish/seafood tags (Phase 8): 38 seafood recipes were untagged
+    ingredient_keywords: [fish, salmon, tuna, cod, tilapia, trout, halibut, sardine, anchov, mackerel, haddock, snapper,
+                          hake, flounder, grouper, pike, roughy, sole fillet, fillet of sole, walleye, mahi, basa fillet,
+                          plaice, sea bass, striped bass, perch, pollock, herring, whiting, pangasius, barramundi,
+                          branzino, carp, kipper, smelt, caviar, roe, seafood]
+    exclude_keywords: [shellfish, spike seasoning, seafood seasoning]
+  shellfish:
+    allergy_keywords: [shellfish, shrimp, crustacean, lobster, crab]
+    ingredient_keywords: [shellfish, shrimp, prawn, crab, lobster, clam, mussel, oyster, scallop, crawfish,
+                          squid, calamari, octopus, langostino, seafood]
+    exclude_keywords: [seafood seasoning]
+
+# Ingredient keywords that produce interaction tags on recipes
+interaction_tags:
+  high_vitamin_k: [kale, spinach, collard, swiss chard, chard, turnip greens, mustard greens, beet greens, brussels sprouts, broccoli, parsley, dandelion]
+  grapefruit: [grapefruit, pomelo]

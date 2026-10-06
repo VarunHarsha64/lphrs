@@ -1,0 +1,58 @@
+{
+  "seed": 42,
+  "reference_date": "2026-10-05T12:45:27+00:00",
+  "adult_age": 18,
+  "lifestyle_days": 730,
+  "normalisation": {
+    "input_rows": 161937,
+    "kept_codes": 161937,
+    "dropped_bad_timestamp": 0,
+    "dropped_unknown_unit": 0,
+    "dropped_out_of_range": 13,
+    "dropped_bp_pair": 46,
+    "merged_duplicates": 4111,
+    "output_rows": 157767
+  },
+  "lifestyle_model": {
+    "features": [
+      "intercept",
+      "age_centered",
+      "male",
+      "overweight",
+      "obese"
+    ],
+    "n": 374,
+    "targets": {
+      "sleep_hours": {
+        "coef": [
+          7.629236479566718,
+          0.07397090665954531,
+          0.14658309512046994,
+          -1.261921989768822,
+          -0.4313067318774116
+        ],
+        "resid_sd": 0.5330107415329992
+      },
+      "steps": {
+        "coef": [
+          6768.770361356642,
+          12.254151304996718,
+          253.84175306705868,
+          64.87082092492116,
+          -3585.957182592002
+        ],
+        "resid_sd": 1515.977316385743
+      },
+      "stress": {
+        "coef": [
+          4.035145848633515,
+          -0.11492445511368587,
+          0.9058868086519885,
+          1.998929388419256,
+          0.2749337480112583
+        ],
+        "resid_sd": 1.3516939224617774
+      }
+    }
+  }
+}

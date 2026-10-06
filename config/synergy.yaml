@@ -1,0 +1,46 @@
+# Tag-pair synergy (+) and conflict (-) values in [-1, 1] (build plan 5.4).
+# synergy(c, s) = clip(sum of values over all (tag_c, tag_s) pairs found here, -1, 1).
+# Pairs are symmetric: [a, b] also applies as [b, a].
+# Values are hand-set illustrations. alpha lives in weights.yaml (set_selection).
+
+pairs:
+  # examples from the build plan
+  - [evening_walk, earlier_bedtime, 0.5]
+  - [hiit, calorie_deficit, -0.6]
+  - [late_caffeine, sleep_hygiene, -0.8]
+
+  # conflicts
+  - [late_caffeine, caffeine_cutoff, -1.0]
+  - [late_caffeine, earlier_bedtime, -0.6]
+  - [high_intensity, calorie_deficit, -0.4]
+  - [hiit, running, -0.3]            # two hard cardio sessions without recovery
+  - [heavy_lifting, hiit, -0.3]
+
+  # synergies
+  - [walking, low_sodium, 0.3]       # combined blood-pressure benefit
+  - [aerobic, dash, 0.4]
+  - [post_meal, low_gi, 0.4]
+  - [strength, plant_protein, 0.2]
+  - [strength, high_protein, 0.2]
+  - [calorie_deficit, food_tracking, 0.4]
+  - [calorie_deficit, weight_tracking, 0.3]
+  - [snack_swap, calorie_deficit, 0.3]
+  - [wind_down, screen_limit, 0.4]
+  - [daylight, sleep_schedule, 0.4]
+  - [mindfulness, sleep_hygiene, 0.3]
+  - [relaxation, earlier_bedtime, 0.3]
+  - [alcohol_reduction, sleep_hygiene, 0.3]
+  - [stress_reduction, bp_monitoring, 0.2]
+  - [glucose_monitoring, low_gi, 0.3]
+  - [meal_prep, low_sodium, 0.3]
+  - [walking, step_goal, 0.3]
+  - [sedentary_break, step_goal, 0.3]
+  - [aerobic, smoking_cessation, 0.2]
+
+  # redundancy: two items sharing these tags overlap (same tag on both sides)
+  - [walking, walking, -0.4]
+  - [aerobic, aerobic, -0.4]
+  - [strength, strength, -0.4]
+  - [sleep_schedule, sleep_schedule, -0.3]
+  - [lab_test, lab_test, -0.3]
+  - [recipe, recipe, -0.2]
